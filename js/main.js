@@ -23,6 +23,10 @@ const state = {
     },
     simulation: {
         epicenter: null // { name, lat, lng }
+    },
+    cwa: {
+        lastId: null,
+        pollingInterval: null
     }
 };
 
@@ -233,6 +237,11 @@ function init() {
 
     updateLocationDisplay();
     initMap();
+
+    // CWA API & Settings
+    setupSettingsUI();
+    CwaService.startPolling();
+
     console.log('App Initialized (CWA 2020 Update)');
 }
 
@@ -907,3 +916,81 @@ function findNearestTown(lat, lng) {
 }
 
 init();
+
+// --- CWA API Service ---
+const CwaService = {
+    ENDPOINT: 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/E-A0015-001',
+
+    fetchLatest: async function () {
+        if (!state.config.cwaKey) return;
+        try {
+            const response = await fetch(`${this.ENDPOINT}?Authorization=${state.config.cwaKey}&format=JSON&limit=1`);
+            const data = await response.json();
+            if (data.success === "true" && data.records.Earthquake.length > 0) {
+                this.processReport(data.records.Earthquake[0]);
+            }
+        } catch (error) {
+            console.error('CWA Fetch Error:', error);
+            const statusEl = document.getElementById('system-status');
+            if (statusEl) {
+                statusEl.innerText = 'API 錯誤';
+                statusEl.parentElement.classList.replace('normal', 'alert');
+            }
+        }
+    },
+
+    processReport: function (report) {
+        const id = report.EarthquakeNo;
+        if (id === state.cwa.lastId) return;
+        const isInitialLoad = state.cwa.lastId === null;
+        state.cwa.lastId = id;
+        if (isInitialLoad) return;
+
+        const info = report.EarthquakeInfo;
+        const epicenter = {
+            name: info.Epicenter.Location,
+            lat: parseFloat(info.Epicenter.EpicenterLatitude),
+            lng: parseFloat(info.Epicenter.EpicenterLongitude)
+        };
+        const M = parseFloat(info.EarthquakeMagnitude.MagnitudeValue);
+        const depth = parseFloat(info.FocalDepth);
+
+        runSimulation(epicenter, M, depth);
+    },
+
+    startPolling: function () {
+        if (state.cwa.pollingInterval) clearInterval(state.cwa.pollingInterval);
+        if (!state.config.cwaKey) {
+            document.getElementById('system-status').innerText = '未設定 API';
+            return;
+        }
+
+        this.fetchLatest();
+        state.cwa.pollingInterval = setInterval(() => this.fetchLatest(), 60000);
+        document.getElementById('system-status').innerText = '實時監測中';
+    }
+};
+
+function setupSettingsUI() {
+    const btn = document.getElementById('settings-btn');
+    const modal = document.getElementById('settings-modal');
+    const close = document.getElementById('modal-close');
+    const save = document.getElementById('save-settings');
+    const input = document.getElementById('cwa-api-key');
+
+    if (!btn || !modal) return;
+    input.value = state.config.cwaKey;
+
+    btn.onclick = () => modal.classList.remove('hidden');
+    close.onclick = () => modal.classList.add('hidden');
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    save.onclick = () => {
+        const key = input.value.trim();
+        state.config.cwaKey = key;
+        localStorage.setItem('cwa_key', key);
+        modal.classList.add('hidden');
+        CwaService.startPolling();
+        alert('設定已儲存！');
+    };
+}

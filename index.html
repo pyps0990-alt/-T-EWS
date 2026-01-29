@@ -49,6 +49,10 @@
                             <option value="">鄉鎮市區</option>
                         </select>
                     </div>
+                    <!-- Settings Button -->
+                    <button id="settings-btn" class="icon-btn-sm" title="設定">
+                        <i data-lucide="settings"></i>
+                    </button>
                     <!-- Test Dropdown -->
                     <select id="test-select" class="select-sm test-select">
                         <option value="">測試</option>
@@ -96,6 +100,27 @@
                     <div class="intensity-box">
                         <small>震度</small>
                         <strong id="start-intensity">--</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal-overlay hidden">
+            <div class="modal-card glass-panel">
+                <div class="modal-header">
+                    <h3><i data-lucide="settings"></i> 系統設定</h3>
+                    <button id="modal-close" class="icon-btn-sm"><i data-lucide="x"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cwa-api-key">CWA API 授權碼 (API Key)</label>
+                        <input type="text" id="cwa-api-key" placeholder="貼上你的 API Key" class="input-sm">
+                        <p class="field-hint">取得授權碼：<a href="https://opendata.cwa.gov.tw/" target="_blank">氣象署開放資料平台</a>
+                        </p>
+                    </div>
+                    <div class="form-row">
+                        <button id="save-settings" class="btn-primary-sm">儲存設定</button>
                     </div>
                 </div>
             </div>
