@@ -915,7 +915,7 @@ function findNearestTown(lat, lng) {
     return closest;
 }
 
-init();
+
 
 // --- CWA API Service ---
 const CwaService = {
@@ -994,3 +994,5 @@ function setupSettingsUI() {
         alert('設定已儲存！');
     };
 }
+
+init();
