@@ -1,0 +1,31 @@
+{
+    "name": "earthquake-warning-app",
+    "version": "1.0.0",
+    "description": "Real-time Earthquake Warning Map",
+    "main": "electron-main.js",
+    "author": "User",
+    "license": "MIT",
+    "scripts": {
+        "start": "electron .",
+        "dist": "electron-builder"
+    },
+    "devDependencies": {
+        "electron": "^28.2.0",
+        "electron-builder": "^24.13.0"
+    },
+    "build": {
+        "appId": "com.earthquake.map",
+        "productName": "Earthquake Warning Map",
+        "win": {
+            "target": "nsis",
+            "icon": "assets/icon.png"
+        },
+        "files": [
+            "**/*",
+            "!dist"
+        ],
+        "directories": {
+            "output": "dist"
+        }
+    }
+}

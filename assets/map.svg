@@ -1,0 +1,60 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <defs>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    
+    <!-- Base Island Shape (Outline/Background) -->
+    <path d="M200 20 C 250 20, 350 150, 320 300 C 300 450, 250 580, 200 580 C 150 580, 80 450, 80 300 C 80 150, 150 20, 200 20 Z" 
+          fill="#1e293b" stroke="none" opacity="0.3" />
+
+    <!-- North (Taipei, New Taipei, Keelung, Taoyuan) -->
+    <path id="Taipei" class="region" 
+          d="M180 30 L240 30 L260 60 L240 80 L180 80 L160 50 Z" />
+    <path id="NewTaipei" class="region" 
+          d="M160 50 L260 60 L280 90 L220 110 L140 90 Z" />
+    <path id="Taoyuan" class="region" 
+          d="M140 90 L180 80 L200 110 L150 130 L120 110 Z" />
+    
+    <!-- North-Central (Hsinchu, Miaoli) -->
+    <path id="Hsinchu" class="region" 
+          d="M120 110 L150 130 L160 160 L110 150 Z" />
+    <path id="Miaoli" class="region" 
+          d="M110 150 L160 160 L150 190 L100 180 Z" />
+
+    <!-- Central (Taichung, Changhua, Nantou) -->
+    <path id="Taichung" class="region" 
+          d="M100 180 L150 190 L160 220 L90 210 Z" />
+    <path id="Nantou" class="region" 
+          d="M160 190 L240 220 L220 300 L160 280 Z" />
+    <path id="Changhua" class="region" 
+          d="M90 210 L160 220 L150 250 L80 240 Z" />
+
+    <!-- South-Central (Yunlin, Chiayi, Tainan) -->
+    <path id="Yunlin" class="region" 
+          d="M80 240 L150 250 L140 280 L70 270 Z" />
+    <path id="Chiayi" class="region" 
+          d="M70 270 L140 280 L160 310 L70 300 Z" />
+    <path id="Tainan" class="region" 
+          d="M70 300 L160 310 L150 360 L60 340 Z" />
+
+    <!-- South (Kaohsiung, Pingtung) -->
+    <path id="Kaohsiung" class="region" 
+          d="M60 340 L150 360 L180 400 L160 450 L70 420 Z" />
+    <path id="Pingtung" class="region" 
+          d="M70 420 L160 450 L180 500 L200 550 L150 570 L100 500 Z" />
+
+    <!-- East (Yilan, Hualien, Taitung) -->
+    <path id="Yilan" class="region" 
+          d="M260 60 L300 80 L320 120 L240 150 L240 80 Z" />
+    <path id="Hualien" class="region" 
+          d="M240 150 L320 120 L300 300 L220 300 L240 220 Z" />
+    <path id="Taitung" class="region" 
+          d="M220 300 L300 300 L250 450 L180 500 L180 400 Z" />
+
+</svg>

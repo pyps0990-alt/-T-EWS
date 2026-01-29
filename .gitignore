@@ -1,0 +1,24 @@
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+package-lock.json
+
+# Gemini/AI tools
+.gemini/
+brain/
+implementation_plan.md
+task.md
+walkthrough.md
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Build/Dist
+dist/
+out/

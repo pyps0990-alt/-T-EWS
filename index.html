@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地震預警系統 (Earthquake Warning)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+TC:wght@400;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Icons (Lucide via CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="theme-dark">
+    <!-- Intro Splash Screen -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-content">
+            <i data-lucide="activity" class="intro-logo"></i>
+            <h1>T-EWS</h1>
+            <p>Taiwan Earthquake Warning System</p>
+        </div>
+    </div>
+
+    <div id="app">
+        <!-- Full Screen Map Background -->
+        <div id="taiwan-map-container" class="map-background">
+            <div class="map-placeholder">載入地圖中...</div>
+        </div>
+
+        <!-- Floating Dashboard (Top Left - Simplified) -->
+        <main class="dashboard-floating">
+            <header class="float-header">
+                <div class="logo-sm">
+                    <i data-lucide="activity"></i>
+                    <span>T-EWS</span>
+                </div>
+                <div class="control-row">
+                    <!-- Location Selection -->
+                    <div class="select-group">
+                        <select id="county-select" class="select-sm">
+                            <option value="">縣市</option>
+                        </select>
+                        <select id="town-select" class="select-sm">
+                            <option value="">鄉鎮市區</option>
+                        </select>
+                    </div>
+                    <!-- Test Dropdown -->
+                    <select id="test-select" class="select-sm test-select">
+                        <option value="">測試</option>
+                        <option value="3">3級 (溫和)</option>
+                        <option value="5">5級 (緊急)</option>
+                        <option value="random">隨機</option>
+                        <option value="reset">重置</option>
+                    </select>
+                </div>
+            </header>
+
+            <section class="info-card glass-panel-sm">
+                <div class="status-row">
+                    <div class="status-indicator normal">
+                        <span class="status-dot"></span>
+                        <span id="system-status">監測中</span>
+                    </div>
+                    <div class="location-badge">
+                        <i data-lucide="map-pin" size="12"></i>
+                        <span id="user-location">定位中...</span>
+                    </div>
+                </div>
+                <div class="hint-text">
+                    <i data-lucide="mouse-pointer-2"></i>
+                    滾輪縮放 • 拖曳移動 • 點擊設震央
+                </div>
+            </section>
+        </main>
+
+        <!-- Alert Banner (Bottom) -->
+        <div id="alert-banner" class="alert-banner-bottom hidden">
+            <div class="alert-content">
+                <div class="alert-main">
+                    <i data-lucide="triangle-alert" class="alert-icon"></i>
+                    <div class="alert-text">
+                        <strong id="alert-title">地震速報</strong>
+                        <span id="alert-message">請立即避難</span>
+                    </div>
+                </div>
+                <div class="alert-stats">
+                    <div class="countdown-box">
+                        <span id="countdown-timer">--</span>
+                        <small>秒</small>
+                    </div>
+                    <div class="intensity-box">
+                        <small>震度</small>
+                        <strong id="start-intensity">--</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hidden select for backwards compatibility -->
+        <select id="loc-select" style="display:none;"></select>
+    </div>
+
+    <!-- Audio Elements (Japan EEW Warning Sounds) -->
+    <!-- Using synthesized siren via Web Audio API for reliability -->
+    <audio id="audio-mild" preload="auto"></audio>
+    <audio id="audio-strong" preload="auto"></audio>
+
+    <script src="js/main.js" defer></script>
+</body>
+
+</html>
