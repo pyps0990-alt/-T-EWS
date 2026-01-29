@@ -25,10 +25,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Debug Status
+        run: |
+          node -v
+          npm -v
+          ls -R assets/
+
       - name: Build Windows Exe
         run: npm run dist
-        env:
-          DEBUG: electron-builder
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
